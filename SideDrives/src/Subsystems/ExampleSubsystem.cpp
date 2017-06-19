@@ -2,6 +2,13 @@
 
 #include "../RobotMap.h"
 
+ExampleSubsystem* ExampleSubsystem::getInstance()
+{
+	if(!m_instance)
+		m_instance = new ExampleSubsystem();
+	return m_instance;
+}
+
 ExampleSubsystem::ExampleSubsystem() :
 		frc::Subsystem("ExampleSubsystem") {
 
