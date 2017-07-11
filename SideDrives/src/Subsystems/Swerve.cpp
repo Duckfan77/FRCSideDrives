@@ -1,6 +1,12 @@
 #include "Swerve.h"
 #include "../RobotMap.h"
 
+Swerve* Swerve::GetInstance()
+{
+	if(!m_instance) m_instance = new Swerve();
+	return m_instance;
+}
+
 Swerve::Swerve() : Subsystem("ExampleSubsystem")
 {
 	m_frontLeftDrive = new CANTalon(0);

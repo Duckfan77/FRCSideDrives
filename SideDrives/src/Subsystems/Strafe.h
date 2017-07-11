@@ -5,8 +5,11 @@
 #include <CANTalon.h>
 #include <AHRS.h>
 
-class Strafe : public PIDSubsystem, public SideDrive{
+class Strafe : public Subsystem, public SideDrive{
 private:
+
+	Strafe();
+	static Strafe* m_instance;
 
 	const int RATIO_ENCODER_RES = 128;//TODO: Insert Correct Number
 
@@ -23,11 +26,8 @@ private:
 	bool m_bNavXPresent;
 
 public:
-	Strafe();
+	static Strafe* GetInstance();
 	~Strafe();
-	double ReturnPIDInput();
-	void UsePIDOutput(double output);
-	void InitDefaultCommand();
 
 	virtual void DriveCartesian(float x, float y, float rotate, bool squaredInputs = false, float gyro=0.0);
 

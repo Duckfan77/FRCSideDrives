@@ -1,11 +1,13 @@
 #include "Strafe.h"
-
-#include <LiveWindow/LiveWindow.h>
-#include <SmartDashboard/SmartDashboard.h>
-
 #include "../RobotMap.h"
 
-Strafe::Strafe() : PIDSubsystem("Strafe", 1.0, 0.0, 0.0)
+Strafe* Strafe::GetInstance()
+{
+	if(!m_instance) m_instance = new Strafe();
+	return m_instance;
+}
+
+Strafe::Strafe() : Subsystem("Strafe")
 {
 	m_frontLeft = new CANTalon(0);
 	m_frontRight = new CANTalon(0);
@@ -40,22 +42,6 @@ Strafe::~Strafe()
 	delete m_strafe;
 	delete m_drive;
 	delete m_navX;
-}
-
-double Strafe::ReturnPIDInput() {
-	// Return your input value for the PID loop
-	// e.g. a sensor, like a potentiometer:
-	// yourPot->SetAverageVoltage() / kYourMaxVoltage;
-}
-
-void Strafe::UsePIDOutput(double output) {
-	// Use output to drive your system, like a motor
-	// e.g. yourMotor->Set(output);
-}
-
-void Strafe::InitDefaultCommand() {
-	// Set the default command for a subsystem here.
-	// SetDefaultCommand(new MySpecialCommand());
 }
 
 void Strafe::DriveCartesian(float x, float y, float rotate, bool squaredInputs, float gyro)

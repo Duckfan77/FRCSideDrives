@@ -7,8 +7,11 @@
 #include "SideDrive.h"
 #define m_frontLeftTurn m_TurnControl
 
-class Swerve : public PIDSubsystem, public SideDrive{
+class Swerve : public Subsystem, public SideDrive{
 private:
+
+	Swerve();
+	static Swerve* m_instance;
 
 	const int RATIO_DRIVE_ENCODER_RES = 128;//TODO: Insert Correct Number
 	const int RATIO_TURN_ENCODER_RES = 256;//TODO: Insert Correct Number
@@ -32,7 +35,8 @@ private:
 	void SetTalonPID();
 
 public:
-	Swerve();
+	static Swerve* GetInstance();
+	~Swerve();
 	void InitDefaultCommand();
 
 	virtual void DriveCartesian(float x, float y, float rotate, bool squaredInputs = false, float gyro=0.0);
