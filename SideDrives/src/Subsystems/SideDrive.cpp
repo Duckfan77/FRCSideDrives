@@ -16,19 +16,19 @@ SideDrive::~SideDrive() {
 	// TODO Auto-generated destructor stub
 }
 
-virtual void SideDrive::CartesianToPolar(float x, float y, float rotate, float gyro)
+virtual void SideDrive::CartesianToPolar(float x, float y, float rotate, bool squaredInputs, float gyro)
 {
 	float m=std::sqrt(x*x+y*y);
 	float theta = std::acos(x/m);
 
-	DrivePolar(m, theta, rotate);
+	DrivePolar(m, theta, rotate, squaredInputs);
 }
 
-virtual void SideDrive::PolarToCartesian(float m, float theta, float rotate)
+virtual void SideDrive::PolarToCartesian(float m, float theta, float rotate, bool squaredInputs = false)
 {
 	float x = std::cos(theta)*m;
 	float y = std::sin(theta)*m;
 
-	DriveCartesian(x, y, rotate);
+	DriveCartesian(x, y, rotate, squaredInputs);
 }
 

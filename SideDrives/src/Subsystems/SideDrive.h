@@ -5,8 +5,8 @@
  *      Author: Colin
  */
 
-#ifndef SRC_SUBSYSTEMS_SIDEDRIVE_H_
-#define SRC_SUBSYSTEMS_SIDEDRIVE_H_
+#ifndef SIDEDRIVE_H
+#define SIDEDRIVE_H
 
 #include <math.h>
 
@@ -24,7 +24,7 @@ public:
 	 * @param rotate The rate of rotation, unrelated to x and y
 	 * @param gyro A gyro value, used for field oriented drive
 	 */
-	virtual void DriveCartesian(float x, float y, float rotate, float gyro=0.0)=0;
+	virtual void DriveCartesian(float x, float y, float rotate, bool squaredInputs = false, float gyro=0.0)=0;
 
 	/**
 	 *
@@ -32,11 +32,11 @@ public:
 	 * @param theta The angle at which to travel
 	 * @param rotate The rate of rotation, unrelated to m and theta
 	 */
-	virtual void DrivePolar(float m, float theta, float rotate)=0;
+	virtual void DrivePolar(float m, float theta, float rotate, bool squaredInputs = false)=0;
 
 private:
-	virtual void CartesianToPolar(float x, float y, float rotate, float gyro=0.0);
-	virtual void PolarToCartesian(float m, float theta, float rotate);
+	virtual void CartesianToPolar(float x, float y, float rotate, bool squaredInputs = false, float gyro=0.0);
+	virtual void PolarToCartesian(float m, float theta, float rotate, bool squaredInputs = false);
 };
 
 #endif /* SRC_SUBSYSTEMS_SIDEDRIVE_H_ */
