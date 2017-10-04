@@ -9,8 +9,17 @@
 #define SIDEDRIVE_H
 
 #include <math.h>
+#include <AHRS.h>
+#include <WPILib.h>
 
 class SideDrive {
+protected:
+	AHRS* m_navX;
+
+	RobotDrive* m_drive;
+
+	bool m_bNavXPresent;
+
 public:
 	SideDrive();
 	virtual ~SideDrive();
@@ -34,7 +43,8 @@ public:
 	 */
 	virtual void DrivePolar(float m, float theta, float rotate, bool squaredInputs = false)=0;
 
-private:
+	virtual void GetAngle();
+protected:
 	virtual void CartesianToPolar(float x, float y, float rotate, bool squaredInputs = false, float gyro=0.0);
 	virtual void PolarToCartesian(float m, float theta, float rotate, bool squaredInputs = false);
 };

@@ -18,18 +18,18 @@ Strafe::Strafe() : Subsystem("Strafe")
 	m_frontLeft->ConfigEncoderCodesPerRev(RATIO_ENCODER_RES);
 	m_frontRight->ConfigEncoderCodesPerRev(RATIO_ENCODER_RES);
 
-	m_drive = new RobotDrive(m_frontLeft, m_frontRight, m_rearLeft, m_rearRight);
+	SideDrive::m_drive = new RobotDrive(m_frontLeft, m_frontRight, m_rearLeft, m_rearRight);
 
 	try{
 		//Connect to navX Gyro on MXP port.
-		m_navX = new AHRS(SPI::Port::kMXP);
-		m_bNavXPresent = true;
+		SideDrive::m_navX = new AHRS(SPI::Port::kMXP);
+		SideDrive::m_bNavXPresent = true;
 	} catch (std::exception &ex){
 		//If connection fails log the error and fall back to encoder based angle handling.
 		std::string str_error = "Error instantiating navX from MXP: ";
 		str_error += ex.what();
 		DriverStation::ReportError(str_error.c_str());
-		m_bNavXPresent = false;
+		SideDrive::m_bNavXPresent = false;
 	}
 }
 
@@ -40,8 +40,8 @@ Strafe::~Strafe()
 	delete m_rearLeft;
 	delete m_rearRight;
 	delete m_strafe;
-	delete m_drive;
-	delete m_navX;
+//	delete m_drive;
+//	delete m_navX;
 }
 
 void Strafe::DriveCartesian(float x, float y, float rotate, bool squaredInputs, float gyro)

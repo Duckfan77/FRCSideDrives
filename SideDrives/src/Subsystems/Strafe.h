@@ -4,6 +4,7 @@
 #include <Commands/PIDSubsystem.h>
 #include <CANTalon.h>
 #include <AHRS.h>
+#include "SideDrive.h"
 
 class Strafe : public Subsystem, public SideDrive{
 private:
@@ -19,11 +20,11 @@ private:
 	CANTalon* m_rearRight;
 	CANTalon* m_strafe;
 
-	AHRS* m_navX;
+	//AHRS* m_navX;
 
-	RobotDrive* m_drive;
+	//RobotDrive* m_drive;
 
-	bool m_bNavXPresent;
+	//bool m_bNavXPresent;
 
 public:
 	static Strafe* GetInstance();

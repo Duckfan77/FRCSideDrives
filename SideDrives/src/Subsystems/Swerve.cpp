@@ -74,12 +74,12 @@ void Swerve::SetTalonPID()
 	m_TurnControl->SetControlMode(CANTalon::ControlMode::kPosition);
 }
 
-void Swerve::DriveCartesian(float x, float y, float rotate, bool squaredInputs = false, float gyro=0.0)
+void Swerve::DriveCartesian(float x, float y, float rotate, bool squaredInputs, float gyro)
 {
 	SideDrive::CartesianToPolar(x, y, rotate, squaredInputs, gyro);
 }
 
-void Swerve::DrivePolar(float m, float theta, float rotate, bool squaredInputs = false)
+void Swerve::DrivePolar(float m, float theta, float rotate, bool squaredInputs)
 {
 	SetTalonPID();
 	m_TurnControl->Set(theta);
