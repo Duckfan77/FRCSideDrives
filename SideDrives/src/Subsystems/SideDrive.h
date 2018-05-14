@@ -16,7 +16,7 @@ class SideDrive {
 protected:
 	AHRS* m_navX;
 
-	RobotDrive* m_drive;
+	DifferentialDrive* m_drive;
 
 	bool m_bNavXPresent;
 

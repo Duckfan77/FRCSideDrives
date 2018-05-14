@@ -1,24 +1,29 @@
 #include "Strafe.h"
 #include "../RobotMap.h"
 
+/*
 Strafe* Strafe::GetInstance()
 {
 	if(!m_instance) m_instance = new Strafe();
 	return m_instance;
-}
+}*/
 
 Strafe::Strafe() : Subsystem("Strafe")
 {
-	m_frontLeft = new CANTalon(0);
-	m_frontRight = new CANTalon(0);
-	m_rearLeft = new CANTalon(0);
-	m_rearRight = new CANTalon(0);
-	m_strafe = new CANTalon(0);
+	m_frontLeft = new WPI_TalonSRX(0);
+	m_frontRight = new WPI_TalonSRX(0);
+	m_rearLeft = new WPI_TalonSRX(0);
+	m_rearRight = new WPI_TalonSRX(0);
+	m_strafe = new WPI_TalonSRX(0);
 
+	/*
 	m_frontLeft->ConfigEncoderCodesPerRev(RATIO_ENCODER_RES);
-	m_frontRight->ConfigEncoderCodesPerRev(RATIO_ENCODER_RES);
+	m_frontRight->ConfigEncoderCodesPerRev(RATIO_ENCODER_RES);*/
 
-	SideDrive::m_drive = new RobotDrive(m_frontLeft, m_frontRight, m_rearLeft, m_rearRight);
+	drive_l=new SpeedControllerGroup(m_frontLeft, m_rearLeft);
+	drive_r=new SpeedControllerGroup(m_frontRight, m_rearRight);
+
+	m_drive = new DifferentialDrive(drive_l, drive_r);
 
 	try{
 		//Connect to navX Gyro on MXP port.
