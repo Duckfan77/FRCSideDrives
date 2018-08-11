@@ -2,7 +2,7 @@
 #define SWERVE_H
 
 #include <Commands/PIDSubsystem.h>
-#include <CANTalon.h>
+#include <ctre/Phoenix.h>
 #include <AHRS.h>
 #include "SideDrive.h"
 #define m_frontLeftTurn m_TurnControl
@@ -16,21 +16,24 @@ private:
 	const int RATIO_DRIVE_ENCODER_RES = 128;//TODO: Insert Correct Number
 	const int RATIO_TURN_ENCODER_RES = 256;//TODO: Insert Correct Number
 
-	CANTalon* m_frontLeftDrive;
-	CANTalon* m_frontRightDrive;
-	CANTalon* m_rearLeftDrive;
-	CANTalon* m_rearRightDrive;
+	WPI_TalonSRX* m_frontLeftDrive;
+	WPI_TalonSRX* m_frontRightDrive;
+	WPI_TalonSRX* m_rearLeftDrive;
+	WPI_TalonSRX* m_rearRightDrive;
 
-	CANTalon* m_frontLeftTurn; //Also known as m_TurnControl
-	CANTalon* m_frontRightTurn;
-	CANTalon* m_rearLeftTurn;
-	CANTalon* m_rearRightTurn;
+	WPI_TalonSRX* m_frontLeftTurn; //Also known as m_TurnControl
+	WPI_TalonSRX* m_frontRightTurn;
+	WPI_TalonSRX* m_rearLeftTurn;
+	WPI_TalonSRX* m_rearRightTurn;
 
-	AHRS* m_navX;
+	SpeedControllerGroup* drive_l;
+	SpeedControllerGroup* drive_r;
 
-	RobotDrive* m_drive;
+	//AHRS* m_navX;
 
-	bool m_bNavXPresent;
+	//RobotDrive* m_drive;
+
+	//bool m_bNavXPresent;
 
 	void SetTalonPID();
 

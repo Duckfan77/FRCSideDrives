@@ -9,30 +9,29 @@ Swerve* Swerve::GetInstance()
 
 Swerve::Swerve() : Subsystem("ExampleSubsystem")
 {
-	m_frontLeftDrive = new CANTalon(0);
-	m_frontRightDrive = new CANTalon(0);
-	m_rearLeftDrive = new CANTalon(0);
-	m_rearRightDrive = new CANTalon(0);
+	m_frontLeftDrive = new WPI_TalonSRX(0);
+	m_frontRightDrive = new WPI_TalonSRX(0);
+	m_rearLeftDrive = new WPI_TalonSRX(0);
+	m_rearRightDrive = new WPI_TalonSRX(0);
 
-	m_frontLeftDrive->ConfigEncoderCodesPerRev(RATIO_DRIVE_ENCODER_RES);
-	m_frontRightDrive->ConfigEncoderCodesPerRev(RATIO_DRIVE_ENCODER_RES);
+	//m_frontLeftDrive->ConfigEncoderCodesPerRev(RATIO_DRIVE_ENCODER_RES);
+	//m_frontRightDrive->ConfigEncoderCodesPerRev(RATIO_DRIVE_ENCODER_RES);
 
-	m_frontLeftTurn = new CANTalon(1);
-	m_frontRightTurn = new CANTalon(2);
-	m_rearLeftTurn = new CANTalon(3);
-	m_rearRightTurn = new CANTalon(4);
+	m_frontLeftTurn = new WPI_TalonSRX(1);
+	m_frontRightTurn = new WPI_TalonSRX(2);
+	m_rearLeftTurn = new WPI_TalonSRX(3);
+	m_rearRightTurn = new WPI_TalonSRX(4);
 
-	m_frontRightTurn->SetControlMode(CANTalon::ControlMode::kFollower);
-	m_rearLeftTurn->SetControlMode(CANTalon::ControlMode::kFollower);
-	m_rearRightTurn->SetControlMode(CANTalon::ControlMode::kFollower);
+	m_frontRightTurn->Set(ControlMode::Follower, 1);//m_frontLeftTurn CAN ID
+	m_rearLeftTurn->Set(ControlMode::Follower, 1);//m_frontLeftTurn CAN ID
+	m_rearRightTurn->Set(ControlMode::Follower, 1);//m_frontLeftTurn CAN ID
 
-	m_frontRightTurn->Set(1);//m_frontLeftTurn CAN ID
-	m_rearLeftTurn->Set(1);//m_frontLeftTurn CAN ID
-	m_rearRightTurn->Set(1);//m_frontLeftTurn CAN ID
+	//m_TurnControl->ConfigEncoderCodesPerRev(RATIO_TURN_ENCODER_RES);
 
-	m_TurnControl->ConfigEncoderCodesPerRev(RATIO_TURN_ENCODER_RES);
+	drive_l=new SpeedControllerGroup(m_frontLeftDrive, m_rearLeftDrive);
+	drive_r=new SpeedControllerGroup(m_frontRightDrive, m_rearRightDrive);
 
-	m_drive = new RobotDrive(m_frontLeftDrive, m_rearLeftDrive, m_frontRightDrive, m_rearRightDrive);
+	m_drive = new DifferentialDrive(drive_l, drive_r);
 
 	try{
 		//Connect to navX Gyro on MXP port.
@@ -61,6 +60,9 @@ Swerve::~Swerve()
 
 	delete m_drive;
 	delete m_navX;
+
+	delete drive_l;
+	delete drive_r;
 }
 
 void Swerve::InitDefaultCommand() {
@@ -70,8 +72,9 @@ void Swerve::InitDefaultCommand() {
 
 void Swerve::SetTalonPID()
 {
+	/*
 	m_TurnControl->SetPID(1,0,0);//TODO: TUNE PID
-	m_TurnControl->SetControlMode(CANTalon::ControlMode::kPosition);
+	m_TurnControl->SetControlMode(WPI_TalonSRX::ControlMode::kPosition);*/
 }
 
 void Swerve::DriveCartesian(float x, float y, float rotate, bool squaredInputs, float gyro)
