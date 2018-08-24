@@ -8,6 +8,9 @@
 #pragma once
 
 class OI {
- public:
-  OI();
+	public:
+		static OI* GetInstance();
+	private:
+		OI();
+		static OI* m_instance;
 };
