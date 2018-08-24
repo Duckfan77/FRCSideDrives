@@ -9,6 +9,8 @@
 
 #include <WPILib.h>
 
+OI* OI::m_instance = NULL;
+
 OI* OI::GetInstance()
 {
 	if(!m_instance)
