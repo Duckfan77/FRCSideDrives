@@ -18,7 +18,6 @@ SideDrive::SideDrive(std::string name) : frc::Subsystem("Sidedrive:"+name)
 SideDrive::~SideDrive()
 {
     delete m_navX;
-    delete m_drive;
 }
 
 void SideDrive::CartesianToPolar(float x, float y, float rotate, bool squaredInputs)

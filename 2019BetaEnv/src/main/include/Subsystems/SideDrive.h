@@ -6,11 +6,9 @@
 
 class SideDrive : frc::Subsystem
 {
-    private:
-        SideDrive(std::string name);
     protected:
+        SideDrive(std::string name);
         AHRS* m_navX;
-        DifferentialDrive* m_drive;
         bool m_bNavXPresent;
 
         virtual void CartesianToPolar(float x, float y, float rotate, bool squaredInputs = false);
