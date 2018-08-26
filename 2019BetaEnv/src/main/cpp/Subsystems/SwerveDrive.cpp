@@ -33,6 +33,11 @@ bool SwerveDrive::DriveModule::setZero()
 
 }
 
+void SwerveDrive::DriveModule::setDriveSpeed(double pVBus)
+{
+	m_drive->Set(ControlMode::PercentOutput, pVBus);
+}
+
 //-------------------------------------------------------------------------------------------------------//
 
 SwerveDrive::SwerveDrive() : SideDrive("SwerveDrive") 
@@ -94,15 +99,25 @@ DifferentialDrive* SwerveDrive::getDrive(int itheta)
 	return m_fwdDrive;
 }
 
+void SwerveDrive::driveTurn(double turn)
+{
+	m_leftFront->setDriveSpeed(turn);
+	m_leftRear->setDriveSpeed(turn);
+	m_rightFront->setDriveSpeed(turn);
+	m_rightRear->setDriveSpeed(turn);
+}
+
 void SwerveDrive::DriveCartesian(float x, float y, float rotate, bool squaredInputs)
 {
 	//Easier to control as polar
 	CartesianToPolar(x,y,rotate,squaredInputs);
 }
 
-//TurnLock not enforced yet
 void SwerveDrive::DrivePolar(float m, float theta, float rotate, bool squaredInputs)
 {
+	if(turnLocked){
+		return driveTurn(rotate);
+	}
 	m_leftFront->setAngle(theta);
 	m_leftRear->setAngle(theta);
 	m_rightFront->setAngle(theta);

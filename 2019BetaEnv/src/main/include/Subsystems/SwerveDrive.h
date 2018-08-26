@@ -83,7 +83,24 @@ class SwerveDrive : SideDrive {
 
 		bool turnLocked;
 
+		/**
+		 * @brief Get the Drive object closest to parallel to the direction of travel
+		 * 
+		 * Gets the most parallel drive object to improve the turning ability of the robot.
+		 * 
+		 * @param itheta the direction of travel in degrees
+		 * @return DifferentialDrive* the optimal drive to use
+		 */
 		DifferentialDrive* getDrive(int itheta);
+
+		/**
+		 * @brief Handles Driving when turnLocked is true
+		 * 
+		 * Should ONLY be used when turnLocked is true.
+		 * 
+		 * @param turn the rate of turning, as percentVBus.
+		 */
+		void driveTurn(double turn);
 	public:
 		~SwerveDrive();
 		static SwerveDrive* getInstance();
