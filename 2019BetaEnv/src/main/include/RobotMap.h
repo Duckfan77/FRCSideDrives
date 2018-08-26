@@ -23,3 +23,18 @@
 // number and the module. For example you with a rangefinder:
 // constexpr int kRangeFinderPort = 1;
 // constexpr int kRangeFinderModule = 1;
+
+//TODO: SET IDs
+constexpr int CAN_LEFT_FRONT_DRIVE=100;
+constexpr int CAN_LEFT_FRONT_ANGLE=100;
+constexpr int CAN_LEFT_REAR_DRIVE=100;
+constexpr int CAN_LEFT_REAR_ANGLE=100;
+constexpr int CAN_RIGHT_FRONT_DRIVE=100;
+constexpr int CAN_RIGHT_FRONT_ANGLE=100;
+constexpr int CAN_RIGHT_REAR_DRIVE=100;
+constexpr int CAN_RIGHT_REAR_ANGLE=100;
+
+constexpr int DIO_LEFT_FRONT_ZERO=101;
+constexpr int DIO_LEFT_REAR_ZERO=101;
+constexpr int DIO_RIGHT_FRONT_ZERO=101;
+constexpr int DIO_RIGHT_REAR_ZERO=101;
