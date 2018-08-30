@@ -12,7 +12,7 @@
 #include "Subsystems/SideDrive.h"
 #include "ctre/Phoenix.h"
 
-class SwerveDrive : SideDrive {
+class SwerveDrive : public SideDrive {
 	private:
 		class DriveModule
 		{

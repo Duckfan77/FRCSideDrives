@@ -4,7 +4,7 @@
 #include <AHRS.h>
 #include <WPILib.h>
 
-class SideDrive : frc::Subsystem
+class SideDrive : public frc::Subsystem
 {
     protected:
         SideDrive(std::string name);
