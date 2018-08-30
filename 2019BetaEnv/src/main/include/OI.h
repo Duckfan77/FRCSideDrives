@@ -7,9 +7,15 @@
 
 #pragma once
 
+#include "RobotMap.h"
+#include <WPILib.h>
+
 class OI {
 	public:
 		static OI* GetInstance();
+		Joystick* stickL;
+		Joystick* stickR;
+		Joystick* gamepad;
 	private:
 		OI();
 		static OI* m_instance;

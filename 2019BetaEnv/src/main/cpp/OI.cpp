@@ -19,5 +19,7 @@ OI* OI::GetInstance()
 }
 
 OI::OI() {
-	// Process operator interface input here.
+	stickL = new Joystick(CONTROLLER_STICK_L);
+	stickR = new Joystick(CONTROLLER_STICK_R);
+	gamepad = new Joystick(CONTROLLER_GAMEPAD);
 }
