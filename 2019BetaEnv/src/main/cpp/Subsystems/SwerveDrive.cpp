@@ -13,7 +13,7 @@ SwerveDrive::DriveModule::DriveModule(int idAngle, int idDrive, int portZero)
 	,m_drive(new WPI_TalonSRX(idDrive))
 	,m_zero(new DigitalInput(portZero))
 {
-
+//TODO: Bind Input Devices, Setup PID
 }
 
 SwerveDrive::DriveModule::~DriveModule()
@@ -97,6 +97,25 @@ DifferentialDrive* SwerveDrive::getDrive(int itheta)
 		return m_sideDrive;
 	}
 	return m_fwdDrive;
+}
+
+void SwerveDrive::setTurnLock(bool lock)
+{
+	turnLocked=lock;
+	if(lock)
+	{
+		//Set wheels tangent to circle of robot wheel base
+		m_leftFront->setAngle(M_PI/4);
+		m_leftRear->setAngle(M_PI/4);
+		m_rightFront->setAngle(M_PI/4);
+		m_rightRear->setAngle(M_PI/4);
+	}else{
+		//Set wheels back to front facing
+		m_leftFront->setAngle(0);
+		m_leftRear->setAngle(0);
+		m_rightFront->setAngle(0);
+		m_rightRear->setAngle(0);
+	}
 }
 
 void SwerveDrive::driveTurn(double turn)

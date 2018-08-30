@@ -122,7 +122,7 @@ class SwerveDrive : SideDrive {
 		 * 
 		 * @param lock True enables the lock, False disables it
 		 */
-		void setTurnLock(bool lock){turnLocked=lock;};
+		void setTurnLock(bool lock);
 
 		/**
 		 * @brief Rotates the modules such that it sets the zero properly for each one.
