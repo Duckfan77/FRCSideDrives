@@ -11,11 +11,14 @@
 #include <WPILib.h>
 #include "Subsystems/SideDrive.h"
 #include "ctre/Phoenix.h"
+#include "misc/ToggleClass.h"
 
 class SwerveDrive : public SideDrive {
 	private:
 		class DriveModule
 		{
+			private:
+			Toggle<bool> edgeDet;
 			public:
 			WPI_TalonSRX* m_angle;
 			WPI_TalonSRX* m_drive;
@@ -55,7 +58,7 @@ class SwerveDrive : public SideDrive {
 			void setDriveSpeed(double pVBus);
 
 			/**
-			 * @brief Set the encoder zero poin
+			 * @brief Set the encoder zero point
 			 * 
 			 * Triggers the zero point when the digital input first triggers and the angle is increasing
 			 * 
@@ -123,13 +126,6 @@ class SwerveDrive : public SideDrive {
 		 * @param lock True enables the lock, False disables it
 		 */
 		void setTurnLock(bool lock);
-
-		/**
-		 * @brief Rotates the modules such that it sets the zero properly for each one.
-		 * 
-		 * While it is running, driving is disabled
-		 */
-		void zeroMotors();
 
 		/**
 		 * @brief Tracks module rotation, to reset the zero when in the proper location.

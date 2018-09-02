@@ -12,6 +12,7 @@ SwerveDrive::DriveModule::DriveModule(int idAngle, int idDrive, int portZero)
 	:m_angle(new WPI_TalonSRX(idAngle))
 	,m_drive(new WPI_TalonSRX(idDrive))
 	,m_zero(new DigitalInput(portZero))
+	,edgeDet(Toggle<bool>(true,false))
 {
 //TODO: Bind Input Devices, Setup PID
 }
@@ -30,7 +31,11 @@ void SwerveDrive::DriveModule::setAngle(double pos)
 
 bool SwerveDrive::DriveModule::setZero()
 {
-
+	if(m_angle->GetSelectedSensorVelocity(0)>0 && edgeDet.risingEdge(m_zero->Get())){
+		m_angle->SetSelectedSensorPosition(0,0,20);
+		return true;
+	}
+	return false;
 }
 
 void SwerveDrive::DriveModule::setDriveSpeed(double pVBus)
@@ -80,7 +85,7 @@ void SwerveDrive::InitDefaultCommand() {
 	// SetDefaultCommand(new MySpecialCommand());
 }
 
-void SwerveDrive::zeroMotors()
+void SwerveDrive::maintainZero()
 {
 	m_leftFront->setZero();
 	m_leftRear->setZero();
