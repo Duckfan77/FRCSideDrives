@@ -14,7 +14,15 @@ SwerveDrive::DriveModule::DriveModule(int idAngle, int idDrive, int portZero)
 	,m_zero(new DigitalInput(portZero))
 	,edgeDet(Toggle<bool>(true,false))
 {
-//TODO: Bind Input Devices, Setup PID
+	m_angle->ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::QuadEncoder,0,10);
+	m_angle->Config_kP(0,1,10);
+	m_angle->Config_kI(0,0,10);
+	m_angle->Config_kD(0,0,10);
+
+	m_drive->ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::QuadEncoder,0,10);
+	m_drive->Config_kP(0,1,10);
+	m_drive->Config_kI(0,0,10);
+	m_drive->Config_kD(0,0,10);
 }
 
 SwerveDrive::DriveModule::~DriveModule()
@@ -24,9 +32,19 @@ SwerveDrive::DriveModule::~DriveModule()
 	delete m_zero;
 }
 
+double SwerveDrive::DriveModule::getAngle()
+{
+	return m_angle->GetSelectedSensorPosition(0);
+}
+
+void SwerveDrive::DriveModule::setTurnRate(double rate)
+{
+	m_angle->Set(ControlMode::Velocity, rate/2/M_PI * RATIO_ANGLE_COUNTS_PER_REV);
+}
+
 void SwerveDrive::DriveModule::setAngle(double pos)
 {
-	m_angle->Set(ControlMode::Position,(int)pos/(2*M_PI) * RATIO_ANGLE_COUNTS_PER_REV);
+	m_angle->Set(ControlMode::Position,(int)(pos/(2*M_PI) * RATIO_ANGLE_COUNTS_PER_REV));
 }
 
 bool SwerveDrive::DriveModule::setZero()

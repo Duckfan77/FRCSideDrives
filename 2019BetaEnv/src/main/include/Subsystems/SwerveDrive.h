@@ -32,7 +32,7 @@ class SwerveDrive : public SideDrive {
 			/**
 			 * @brief Gets the position of the angle encoder
 			 * 
-			 * @return int the angle in radians
+			 * @return double the angle in radians
 			 */
 			double getAngle();
 
