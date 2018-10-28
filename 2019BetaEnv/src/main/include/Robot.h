@@ -11,7 +11,6 @@
 #include <SmartDashboard/SendableChooser.h>
 #include <TimedRobot.h>
 
-#include "Commands/MyAutoCommand.h"
 #include "OI.h"
 
 class Robot : public frc::TimedRobot {
