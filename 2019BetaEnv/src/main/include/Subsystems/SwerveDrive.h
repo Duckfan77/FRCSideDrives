@@ -23,6 +23,7 @@ class SwerveDrive : public SideDrive {
 			WPI_TalonSRX* m_angle;
 			WPI_TalonSRX* m_drive;
 			DigitalInput* m_zero;
+			bool zeroed;
 			//TODO: Setup Value
 			static constexpr int RATIO_ANGLE_COUNTS_PER_REV = 1;
 
@@ -64,6 +65,16 @@ class SwerveDrive : public SideDrive {
 			 * 
 			 * @return true the zero was set
 			 * @return false the zero was not set
+			 */
+			bool maintainZero();
+
+			/**
+			 * @brief Sets the encoder zero point
+			 * 
+			 * Triggers the zero point when the digital input triggers and the angle is increasing, then stops rotation
+			 * 
+			 * @return true the zero was set, and motion stopped 
+			 * @return false the zero has not been set
 			 */
 			bool setZero();
 		};
@@ -111,6 +122,14 @@ class SwerveDrive : public SideDrive {
 		void InitDefaultCommand() override;
 
 		/**
+		 * @brief Checks if the wheels have found their zeros yet
+		 * 
+		 * @return true The zeros have been located
+		 * @return false At least one wheel is unzeroed. 
+		 */
+		bool isZeroed();
+
+		/**
 		 * @brief gets the status of the turn lock
 		 * 
 		 * @return true turn lock is enabled
@@ -134,6 +153,23 @@ class SwerveDrive : public SideDrive {
 		 * If properly zeroed, shouldn't be needed, unless encoders drift or gears slip.
 		 */
 		void maintainZero();
+
+		/**
+		 * @brief Sets the zero initially
+		 * 
+		 * Identical to maintainZero(), but wheels stop when they find the zero point.
+		 * 
+		 */
+		void setZero();
+
+		/**
+		 * @brief Rotates the drive wheels
+		 * 
+		 * Causes the drive wheels to rotate orientation at vel;
+		 * 
+		 * @param vel the rate of rotation in radians/100 ms
+		 */
+		void rotateWheels(double vel);
 
 		void DriveCartesian(float x, float y, float rotate, bool squaredInputs = false) override;
 		void DrivePolar(float m, float theta, float rotate, bool squaredInputs = false) override;

@@ -13,6 +13,7 @@ SwerveDrive::DriveModule::DriveModule(int idAngle, int idDrive, int portZero)
 	,m_drive(new WPI_TalonSRX(idDrive))
 	,m_zero(new DigitalInput(portZero))
 	,edgeDet(Toggle<bool>(true,false))
+	,zeroed(false)
 {
 	m_angle->ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::QuadEncoder,0,10);
 	m_angle->Config_kP(0,1,10);
@@ -47,10 +48,20 @@ void SwerveDrive::DriveModule::setAngle(double pos)
 	m_angle->Set(ControlMode::Position,(int)(pos/(2*M_PI) * RATIO_ANGLE_COUNTS_PER_REV));
 }
 
-bool SwerveDrive::DriveModule::setZero()
+bool SwerveDrive::DriveModule::maintainZero()
 {
 	if(m_angle->GetSelectedSensorVelocity(0)>0 && edgeDet.risingEdge(m_zero->Get())){
 		m_angle->SetSelectedSensorPosition(0,0,20);
+		zeroed=true;
+		return true;
+	}
+	return false;
+}
+
+bool SwerveDrive::DriveModule::setZero()
+{
+	if(maintainZero()){
+		m_angle->Set(ControlMode::PercentOutput, 0);
 		return true;
 	}
 	return false;
@@ -103,12 +114,33 @@ void SwerveDrive::InitDefaultCommand() {
 	// SetDefaultCommand(new MySpecialCommand());
 }
 
+bool SwerveDrive::isZeroed()
+{
+	return m_leftFront->zeroed && m_leftRear->zeroed && m_rightFront->zeroed && m_rightRear->zeroed;
+}
+
 void SwerveDrive::maintainZero()
 {
+	m_leftFront->maintainZero();
+	m_leftRear->maintainZero();
+	m_rightFront->maintainZero();
+	m_rightRear->maintainZero();
+}
+
+void SwerveDrive::setZero()
+{
 	m_leftFront->setZero();
-	m_leftRear->setZero();
-	m_rightFront->setZero();
-	m_rightRear->setZero();
+	m_leftRear->maintainZero();
+	m_rightFront->maintainZero();
+	m_rightRear->maintainZero();
+}
+
+void SwerveDrive::rotateWheels(double vel)
+{
+	m_leftFront->setTurnRate(vel);
+	m_leftRear->setTurnRate(vel);
+	m_rightFront->setTurnRate(vel);
+	m_rightRear->setTurnRate(vel);
 }
 
 DifferentialDrive* SwerveDrive::getDrive(int itheta)
