@@ -12,6 +12,7 @@
 #include "Subsystems/SideDrive.h"
 #include "ctre/Phoenix.h"
 #include "misc/ToggleClass.h"
+#include <math.h>
 
 class SwerveDrive : public SideDrive {
 	private:
@@ -97,6 +98,8 @@ class SwerveDrive : public SideDrive {
 
 		bool turnLocked;
 
+		float zeroHeading=0;//TODO: To Set, may add setter later
+
 		/**
 		 * @brief Get the Drive object closest to parallel to the direction of travel
 		 * 
@@ -173,4 +176,9 @@ class SwerveDrive : public SideDrive {
 
 		void DriveCartesian(float x, float y, float rotate, bool squaredInputs = false) override;
 		void DrivePolar(float m, float theta, float rotate, bool squaredInputs = false) override;
+
+		void DriveFieldPolar(float m, float theta, float rotate, bool squaredInputs = false);
+		void DriveFieldCartesian(float x, float y, float rotate, bool squaredInputs=false);
+
+		float getWheelAngle();
 };

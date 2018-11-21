@@ -208,3 +208,26 @@ void SwerveDrive::DrivePolar(float m, float theta, float rotate, bool squaredInp
 	//Get optimal drive, and drive using it
 	getDrive(theta)->ArcadeDrive(m,rotate,squaredInputs);
 }
+
+void SwerveDrive::DriveFieldPolar(float m, float theta, float rotate, bool squaredInputs)
+{
+	float actHeading = SideDrive::m_navX->GetYaw()-zeroHeading+theta;
+	actHeading += floor(getWheelAngle()/(2*M_PI));
+	DrivePolar(m, actHeading, rotate, squaredInputs);
+
+}
+
+void SwerveDrive::DriveFieldCartesian(float x, float y, float rotate, bool squaredInputs)
+{
+	float m = std::sqrt(x*x+y*y);
+    float theta = std::acos(x/m);
+	DriveFieldPolar(m, theta, rotate, squaredInputs);
+}
+
+float SwerveDrive::getWheelAngle()
+{
+	return (m_leftFront->getAngle()+
+			m_leftRear->getAngle()+
+			m_rightFront->getAngle()+
+			m_rightRear->getAngle())/4;
+}
