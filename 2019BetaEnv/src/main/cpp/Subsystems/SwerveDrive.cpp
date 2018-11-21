@@ -110,8 +110,7 @@ SwerveDrive* SwerveDrive::getInstance()
 }
 
 void SwerveDrive::InitDefaultCommand() {
-	// Set the default command for a subsystem here.
-	// SetDefaultCommand(new MySpecialCommand());
+	SetDefaultCommand(new FieldDrive());
 }
 
 bool SwerveDrive::isZeroed()

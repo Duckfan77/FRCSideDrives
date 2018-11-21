@@ -13,6 +13,7 @@
 #include "ctre/Phoenix.h"
 #include "misc/ToggleClass.h"
 #include <math.h>
+#include "Commands/FieldDrive.h"
 
 class SwerveDrive : public SideDrive {
 	private:
