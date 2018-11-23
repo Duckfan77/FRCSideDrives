@@ -88,6 +88,9 @@ SwerveDrive::SwerveDrive() : SideDrive("SwerveDrive")
 
 	m_fwdDrive = new DifferentialDrive(*m_leftMotors, *m_rightMotors);
 	m_sideDrive = new DifferentialDrive(*m_frontMotors, *m_rearMotors);
+
+	m_fwdDrive->SetSafetyEnabled(false);
+	m_sideDrive->SetSafetyEnabled(false);
 }
 
 SwerveDrive::~SwerveDrive()
@@ -105,7 +108,8 @@ SwerveDrive* SwerveDrive::m_instance = NULL;
 
 SwerveDrive* SwerveDrive::getInstance()
 {
-	if(!m_instance) m_instance = new SwerveDrive();
+	if(m_instance==NULL||m_instance==nullptr) m_instance = new SwerveDrive();
+	//std::cout<<"SwerveDrive Instance Got"<<std::endl;
 	return m_instance;
 }
 
@@ -120,6 +124,7 @@ bool SwerveDrive::isZeroed()
 
 void SwerveDrive::maintainZero()
 {
+	std::cout<<"Maintaining Zero"<<std::endl;
 	m_leftFront->maintainZero();
 	m_leftRear->maintainZero();
 	m_rightFront->maintainZero();
@@ -128,14 +133,16 @@ void SwerveDrive::maintainZero()
 
 void SwerveDrive::setZero()
 {
+	std::cout<<"Setting Zero"<<std::endl;
 	m_leftFront->setZero();
-	m_leftRear->maintainZero();
-	m_rightFront->maintainZero();
-	m_rightRear->maintainZero();
+	m_leftRear->setZero();
+	m_rightFront->setZero();
+	m_rightRear->setZero();
 }
 
 void SwerveDrive::rotateWheels(double vel)
 {
+	std::cout<<"Rotating Wheels at "<<vel<<std::endl;
 	m_leftFront->setTurnRate(vel);
 	m_leftRear->setTurnRate(vel);
 	m_rightFront->setTurnRate(vel);
@@ -212,7 +219,16 @@ void SwerveDrive::DriveFieldPolar(float m, float theta, float rotate, bool squar
 {
 	float actHeading = SideDrive::m_navX->GetYaw()-zeroHeading+theta;
 	actHeading += floor(getWheelAngle()/(2*M_PI));
+	std::cout<<"a"<<actHeading<<" "<<m<<" "<<theta<<" "<<rotate<<std::endl;
+	if(m>0.25){
+		std::cout<<"Drivingasdf"<<std::endl;
+	float actHeading = SideDrive::m_navX->GetYaw()-zeroHeading+theta;
+	actHeading += floor(getWheelAngle()/(2*M_PI));
 	DrivePolar(m, actHeading, rotate, squaredInputs);
+	}else{
+		std::cout<<"Not_Driving"<<std::endl;
+		DrivePolar(0,0,0,false);
+	}
 
 }
 
@@ -229,4 +245,12 @@ float SwerveDrive::getWheelAngle()
 			m_leftRear->getAngle()+
 			m_rightFront->getAngle()+
 			m_rightRear->getAngle())/4;
+}
+
+void SwerveDrive::rotateWheelsPVBus(double pVBus)
+{
+	getInstance()->m_leftFront->m_angle->Set(ControlMode::PercentOutput, pVBus);
+	getInstance()->m_leftRear->m_angle->Set(ControlMode::PercentOutput, pVBus);
+	getInstance()->m_rightFront->m_angle->Set(ControlMode::PercentOutput, pVBus);
+	getInstance()->m_rightRear->m_angle->Set(ControlMode::PercentOutput, pVBus);
 }

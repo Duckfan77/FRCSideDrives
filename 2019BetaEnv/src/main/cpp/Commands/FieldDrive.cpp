@@ -6,21 +6,24 @@
 /*----------------------------------------------------------------------------*/
 
 #include "Commands/FieldDrive.h"
+#include <iostream>
 
 FieldDrive::FieldDrive() {
 	Requires(SwerveDrive::getInstance());
 }
 
 // Called just before this Command runs the first time
-void FieldDrive::Initialize() {}
+void FieldDrive::Initialize() {std::cout<<"FieldDriveStarting"<<std::endl;}
 
 // Called repeatedly when this Command is scheduled to run
 void FieldDrive::Execute() 
 {
 	//Verify Axis Numbers
-	double driveX = OI::GetInstance()->stickL->GetRawAxis(0);
-	double driveY = OI::GetInstance()->stickL->GetRawAxis(1);
-	double rotate = OI::GetInstance()->stickR->GetRawAxis(0);
+	double driveX = -OI::GetInstance()->stickL->GetRawAxis(0);
+	double driveY = -OI::GetInstance()->stickL->GetRawAxis(1);
+	double rotate = -OI::GetInstance()->stickR->GetRawAxis(0);
+	std::cout<<driveX<<" "<<driveY<<" "<<rotate<<std::endl;
+	
 	SwerveDrive::getInstance()->DriveFieldCartesian(driveX, driveY, rotate, true);
 }
 

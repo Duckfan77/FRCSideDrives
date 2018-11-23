@@ -5,37 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "Commands/ZeroDrive.h"
-#include <iostream>
+#include "Commands/TestTurn.h"
 
-ZeroDrive::ZeroDrive() {
+TestTurn::TestTurn() {
 	Requires(SwerveDrive::getInstance());
 }
 
 // Called just before this Command runs the first time
-void ZeroDrive::Initialize() 
-{
-	SwerveDrive::getInstance()->rotateWheels(.2);
-	std::cout<<"Zero Drive Starting"<<std::endl;
+void TestTurn::Initialize() {
+	std::cout<<"TestTurnInit"<<std::endl;
+	SwerveDrive::rotateWheelsPVBus(.2);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ZeroDrive::Execute() 
-{
-	SwerveDrive* SwerveDrive = SwerveDrive::getInstance();
-	SwerveDrive->setZero();	
-}
+void TestTurn::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool ZeroDrive::IsFinished() { return SwerveDrive::getInstance()->isZeroed(); }
+bool TestTurn::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void ZeroDrive::End() {
-	SwerveDrive::getInstance()->DrivePolar(0,0,0);
+void TestTurn::End() 
+{
+	SwerveDrive::rotateWheelsPVBus(0);
+	///SwerveDrive::getInstance()->DriveFieldPolar(0,0,0,false);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ZeroDrive::Interrupted() {
+void TestTurn::Interrupted() {
 	End();
 }

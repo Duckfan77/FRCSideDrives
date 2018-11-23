@@ -14,6 +14,7 @@
 #include "misc/ToggleClass.h"
 #include <math.h>
 #include "Commands/FieldDrive.h"
+#include <iostream>
 
 class SwerveDrive : public SideDrive {
 	private:
@@ -174,6 +175,8 @@ class SwerveDrive : public SideDrive {
 		 * @param vel the rate of rotation in radians/100 ms
 		 */
 		void rotateWheels(double vel);
+
+		static void rotateWheelsPVBus(double pVBus);
 
 		void DriveCartesian(float x, float y, float rotate, bool squaredInputs = false) override;
 		void DrivePolar(float m, float theta, float rotate, bool squaredInputs = false) override;

@@ -7,21 +7,16 @@
 
 #pragma once
 
-#include "RobotMap.h"
-#include <WPILib.h>
-#include "Commands/ZeroDrive.h"
-#include "Commands/TestTurn.h"
+#include <Commands/Command.h>
+#include "Subsystems/SwerveDrive.h"
+#include <iostream>
 
-class OI {
-	public:
-		static OI* GetInstance();
-		Joystick* stickL;
-		Joystick* stickR;
-		Joystick* gamepad;
-		JoystickButton* zero;
-		JoystickButton* l_btn_10;
-		JoystickButton* r_btn_10;
-	private:
-		OI();
-		static OI* m_instance;
+class TestTurn : public frc::Command {
+ public:
+  TestTurn();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
 };
