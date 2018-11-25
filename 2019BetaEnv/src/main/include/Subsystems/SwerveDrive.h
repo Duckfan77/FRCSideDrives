@@ -26,11 +26,12 @@ class SwerveDrive : public SideDrive {
 			WPI_TalonSRX* m_angle;
 			WPI_TalonSRX* m_drive;
 			DigitalInput* m_zero;
-			bool zeroed;
-			//TODO: Setup Value
-			static constexpr int RATIO_ANGLE_COUNTS_PER_REV = 1;
+			bool zeroed=false;
+			int id;
+			float m_angleOffset;
+			static constexpr float RATIO_ANGLE_COUNTS_PER_REV = 77.0/20.0 * 4096;
 
-			DriveModule(int idAngle, int idDrive, int portZero);
+			DriveModule(int idAngle, int idDrive, int portZero, float angleOffset, bool invertAngleEncoder);
 			~DriveModule();
 
 			/**
@@ -98,7 +99,7 @@ class SwerveDrive : public SideDrive {
 		DifferentialDrive* m_fwdDrive;
 		DifferentialDrive* m_sideDrive;
 
-		bool turnLocked;
+		bool turnLocked=false;
 
 		float zeroHeading=0;//TODO: To Set, may add setter later
 
@@ -184,5 +185,5 @@ class SwerveDrive : public SideDrive {
 		void DriveFieldPolar(float m, float theta, float rotate, bool squaredInputs = false);
 		void DriveFieldCartesian(float x, float y, float rotate, bool squaredInputs=false);
 
-		float getWheelAngle();
+		float getAvgWheelAngle();
 };

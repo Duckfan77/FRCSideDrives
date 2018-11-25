@@ -22,7 +22,7 @@ void FieldDrive::Execute()
 	double driveX = -OI::GetInstance()->stickL->GetRawAxis(0);
 	double driveY = -OI::GetInstance()->stickL->GetRawAxis(1);
 	double rotate = -OI::GetInstance()->stickR->GetRawAxis(0);
-	std::cout<<driveX<<" "<<driveY<<" "<<rotate<<std::endl;
+	//std::cout<<driveX<<" "<<driveY<<" "<<rotate<<std::endl;
 	
 	SwerveDrive::getInstance()->DriveFieldCartesian(driveX, driveY, rotate, true);
 }
