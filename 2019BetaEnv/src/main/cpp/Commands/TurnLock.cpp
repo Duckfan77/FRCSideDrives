@@ -5,38 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "Commands/ZeroDrive.h"
-#include <iostream>
+#include "Commands/TurnLock.h"
 
-ZeroDrive::ZeroDrive() {
+TurnLock::TurnLock() {
 	Requires(SwerveDrive::getInstance());
 }
 
 // Called just before this Command runs the first time
-void ZeroDrive::Initialize() 
-{
-	SwerveDrive::rotateWheelsPVBus(0.2);
-	std::cout<<"Zero Drive Starting"<<std::endl;
+void TurnLock::Initialize() {
+	std::cout<<"TurnLockInit"<<std::endl;
+	SwerveDrive::getInstance()->setTurnLock(!SwerveDrive::getInstance()->isTurnLocked());
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ZeroDrive::Execute() 
-{
-	SwerveDrive* SwerveDrive = SwerveDrive::getInstance();
-	SwerveDrive->setZero();	
-}
+void TurnLock::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool ZeroDrive::IsFinished() { return SwerveDrive::getInstance()->isZeroed(); }
+bool TurnLock::IsFinished() { return true; }
 
 // Called once after isFinished returns true
-void ZeroDrive::End() {
-	SwerveDrive::rotateWheelsPVBus(0);
-	SwerveDrive::getInstance()->DrivePolar(0,0,0);
+void TurnLock::End() 
+{
+	//SwerveDrive::getInstance()->setTurnLock(false);
+	//SwerveDrive::getInstance()->DriveFieldPolar(0,0,0,false);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ZeroDrive::Interrupted() {
+void TurnLock::Interrupted() {
 	End();
 }

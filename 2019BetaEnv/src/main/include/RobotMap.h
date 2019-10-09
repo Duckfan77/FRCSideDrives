@@ -25,19 +25,19 @@
 // constexpr int kRangeFinderModule = 1;
 
 //TODO: SET IDs
-constexpr int CAN_LEFT_FRONT_DRIVE=100;
-constexpr int CAN_LEFT_FRONT_ANGLE=100;
-constexpr int CAN_LEFT_REAR_DRIVE=100;
-constexpr int CAN_LEFT_REAR_ANGLE=100;
-constexpr int CAN_RIGHT_FRONT_DRIVE=100;
-constexpr int CAN_RIGHT_FRONT_ANGLE=100;
-constexpr int CAN_RIGHT_REAR_DRIVE=100;
-constexpr int CAN_RIGHT_REAR_ANGLE=100;
+constexpr int CAN_LEFT_FRONT_DRIVE=1;
+constexpr int CAN_LEFT_FRONT_ANGLE=2;
+constexpr int CAN_LEFT_REAR_DRIVE=5;
+constexpr int CAN_LEFT_REAR_ANGLE=6;
+constexpr int CAN_RIGHT_FRONT_DRIVE=3;
+constexpr int CAN_RIGHT_FRONT_ANGLE=4;
+constexpr int CAN_RIGHT_REAR_DRIVE=7;
+constexpr int CAN_RIGHT_REAR_ANGLE=8;
 
-constexpr int DIO_LEFT_FRONT_ZERO=101;
-constexpr int DIO_LEFT_REAR_ZERO=101;
-constexpr int DIO_RIGHT_FRONT_ZERO=101;
-constexpr int DIO_RIGHT_REAR_ZERO=101;
+constexpr int DIO_LEFT_FRONT_ZERO=1;
+constexpr int DIO_LEFT_REAR_ZERO=0;
+constexpr int DIO_RIGHT_FRONT_ZERO=2;
+constexpr int DIO_RIGHT_REAR_ZERO=3;
 
 
 constexpr int CONTROLLER_STICK_L=0;

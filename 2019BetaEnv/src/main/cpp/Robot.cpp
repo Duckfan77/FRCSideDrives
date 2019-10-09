@@ -14,6 +14,7 @@ OI* Robot::m_oi;
 
 void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+  SwerveDrive::getInstance();
 }
 
 /**
