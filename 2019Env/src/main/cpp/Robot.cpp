@@ -7,13 +7,14 @@
 
 #include "Robot.h"
 
-#include <frc/commands/Scheduler.h>
-#include <frc/smartDashboard/SmartDashboard.h>
+#include <Commands/Scheduler.h>
+#include <SmartDashboard/SmartDashboard.h>
 
 OI* Robot::m_oi;
 
 void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+  SwerveDrive::getInstance();
 }
 
 /**
@@ -80,6 +81,5 @@ void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 void Robot::TestPeriodic() {}
 
 #ifndef RUNNING_FRC_TESTS
-int main() { return frc::StartRobot<Robot>(); }
-//START_ROBOT_CLASS(Robot)
+START_ROBOT_CLASS(Robot)
 #endif
