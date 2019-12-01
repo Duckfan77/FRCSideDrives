@@ -19,16 +19,14 @@ OI* OI::GetInstance()
 }
 
 OI::OI() {
-	stickL = new Joystick(CONTROLLER_STICK_L);
-	stickR = new Joystick(CONTROLLER_STICK_R);
 	gamepad = new Joystick(CONTROLLER_GAMEPAD);
-	zero = new JoystickButton(stickL, 7);
-	turnLock = new JoystickButton(stickR, 5);
-	l_btn_10 = new JoystickButton(stickL, 10);
-	r_btn_10 = new JoystickButton(stickR, 10);
+	zero = new JoystickButton(gamepad, 8);      //Start
+	turnLock = new JoystickButton(gamepad, 6);  //R Bumper
+	//l_btn_10 = new JoystickButton(gamepad, 10);
+	//r_btn_10 = new JoystickButton(gamepad, 10);
 
 	zero->WhenPressed(new ZeroDrive());
-	l_btn_10->ToggleWhenPressed(new TestTurn());
-	r_btn_10->ToggleWhenPressed(new TestDrive());
+	//l_btn_10->ToggleWhenPressed(new TestTurn());
+	//r_btn_10->ToggleWhenPressed(new TestDrive());
 	turnLock->ToggleWhenPressed(new TurnLock());
 }

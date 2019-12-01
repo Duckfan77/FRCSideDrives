@@ -22,9 +22,9 @@ void cDrive::RobotDrive::Initialize()
 void cDrive::RobotDrive::Execute()
 {
 	//Verify Axis Numbers
-	double driveX = OI::GetInstance()->stickL->GetRawAxis(0);
-	double driveY = OI::GetInstance()->stickL->GetRawAxis(1);
-	double rotate = OI::GetInstance()->stickR->GetRawAxis(0);
+	double driveX = OI::GetInstance()->gamepad->GetRawAxis(1);
+	double driveY = OI::GetInstance()->gamepad->GetRawAxis(0);
+	double rotate = OI::GetInstance()->gamepad->GetRawAxis(4);
 	SwerveDrive::getInstance()->DriveCartesian(driveX, driveY, rotate, true);
 }
 

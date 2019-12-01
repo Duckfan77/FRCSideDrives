@@ -17,8 +17,6 @@
 class OI {
 	public:
 		static OI* GetInstance();
-		Joystick* stickL;
-		Joystick* stickR;
 		Joystick* gamepad;
 		JoystickButton* zero;
 		JoystickButton* l_btn_10;

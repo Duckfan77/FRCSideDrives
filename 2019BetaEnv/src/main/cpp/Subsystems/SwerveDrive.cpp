@@ -242,15 +242,15 @@ void SwerveDrive::DrivePolar(float m, float theta, float rotate, bool squaredInp
 void SwerveDrive::DriveFieldPolar(float m, float theta, float rotate, bool squaredInputs)
 {
 	//float actHeading = SideDrive::m_navX->GetYaw()-zeroHeading+theta;
-	//float actHeading=theta;
+	float actHeading=theta;
 	getAvgWheelAngle();
 	//actHeading += floor(getAvgWheelAngle()/(2*M_PI));
 	std::cout<<"a"<<actHeading<<" "<<m<<" "<<theta<<" "<<rotate<<std::endl;
 	std::cout<<"Turn Locked: "<<turnLocked<<std::endl;
 	if(0 || std::fabs(m)>Preferences::GetInstance()->GetDouble("m threshold", 0.2) || std::fabs(rotate)>Preferences::GetInstance()->GetDouble("rotate threshold", 0.5)){
 		//std::cout<<"Drivingasdf"<<std::endl;
-		float actHeading = SideDrive::m_navX->GetYaw()*M_PI/180-zeroHeading+theta;
-		actHeading += floor(getWheelAngle()/(2*M_PI));
+		//float actHeading = SideDrive::m_navX->GetYaw()-zeroHeading+theta;
+		//actHeading += floor(getWheelAngle()/(2*M_PI));
 		DrivePolar(0.5*m, actHeading, rotate, squaredInputs);
 	}else{
 		//std::cout<<"Not_Driving"<<std::endl;
