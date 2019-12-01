@@ -248,6 +248,11 @@ void SwerveDrive::DriveFieldPolar(float m, float theta, float rotate, bool squar
 	//std::cout<<"a"<<actHeading<<" "<<m<<" "<<theta<<" "<<rotate<<std::endl;
 	std::cout<<"Turn Locked: "<<turnLocked<<std::endl;
 	if(0 || std::fabs(m)>Preferences::GetInstance()->GetDouble("m threshold", 0.2) || std::fabs(rotate)>Preferences::GetInstance()->GetDouble("rotate threshold", 0.5)){
+		
+		if(turnLocked){
+			rotate*=0.5;
+			return driveTurn(squaredInputs ? rotate*rotate : rotate);
+		}
 		//std::cout<<"Drivingasdf"<<std::endl;
 		float actHeading = SideDrive::m_navX->GetYaw()*M_PI/180-zeroHeading+theta;
 		actHeading += floor(getAvgWheelAngle()/(2*M_PI));

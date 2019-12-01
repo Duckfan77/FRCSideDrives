@@ -39,7 +39,4 @@ constexpr int DIO_LEFT_REAR_ZERO=0;
 constexpr int DIO_RIGHT_FRONT_ZERO=2;
 constexpr int DIO_RIGHT_REAR_ZERO=3;
 
-
-constexpr int CONTROLLER_STICK_L=0;
-constexpr int CONTROLLER_STICK_R=1;
-constexpr int CONTROLLER_GAMEPAD=2;
+constexpr int CONTROLLER_GAMEPAD=0;

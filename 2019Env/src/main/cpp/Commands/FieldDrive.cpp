@@ -19,10 +19,11 @@ void FieldDrive::Initialize() {std::cout<<"FieldDriveStarting"<<std::endl;}
 void FieldDrive::Execute() 
 {
 	//Verify Axis Numbers
-	double driveX = -OI::GetInstance()->gamepad->GetRawAxis(1);
-	double driveY = -OI::GetInstance()->gamepad->GetRawAxis(0);
+	
+	double driveX = OI::GetInstance()->gamepad->GetRawAxis(0);
+	double driveY = -OI::GetInstance()->gamepad->GetRawAxis(1);
 	double rotate = -OI::GetInstance()->gamepad->GetRawAxis(4);
-	//std::cout<<driveX<<" "<<driveY<<" "<<rotate<<std::endl;
+	std::cout<<driveX<<" "<<driveY<<" "<<rotate<<std::endl;
 	
 	SwerveDrive::getInstance()->DriveFieldCartesian(driveX, driveY, rotate, true);
 }
